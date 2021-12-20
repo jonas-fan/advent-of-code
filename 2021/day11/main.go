@@ -86,7 +86,7 @@ func solution2(octopuses [][]int) int {
 	flashes := 0
 	count := len(octopuses) * len(octopuses[0])
 
-	for steps = 0; flashes != count; steps++{
+	for steps = 0; flashes != count; steps++ {
 		ready := []*Position{}
 
 		for row, line := range octopuses {

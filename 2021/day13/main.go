@@ -147,22 +147,25 @@ func solution2(points [][]int, folds [][]int) int {
 func main() {
 	points := [][]int{}
 	folds := [][]int{}
+	reader := read(os.Stdin)
 
-	for input := range read(os.Stdin) {
-		tokensByComma := strings.Split(input, ",")
-		tokensBySpace := strings.Split(input, " ")
+	for input := range reader {
+		if input == "" {
+			break
+		}
 
-		if len(tokensByComma) > 1 {
-			points = append(points, str2intSlice(tokensByComma))
-		} else if len(tokensBySpace) > 1 {
-			tokens := strings.Split(tokensBySpace[len(tokensBySpace)-1], "=")
+		points = append(points, str2intSlice(strings.Split(input, ",")))
+	}
 
-			switch tokens[0] {
-			case "x":
-				folds = append(folds, []int{str2int(tokens[1]), 0})
-			case "y":
-				folds = append(folds, []int{0, str2int(tokens[1])})
-			}
+	for input := range reader {
+		tokens := strings.Split(input, " ")
+		tokens = strings.Split(tokens[len(tokens)-1], "=")
+
+		switch val := str2int(tokens[1]); tokens[0] {
+		case "x":
+			folds = append(folds, []int{val, 0})
+		case "y":
+			folds = append(folds, []int{0, val})
 		}
 	}
 

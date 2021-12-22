@@ -79,7 +79,7 @@ func solution2(position []int) int {
 
 		for j, count := range pos {
 			if i != j {
-				dist := abs(i-j)
+				dist := abs(i - j)
 
 				fuel += count * (((1 + dist) * dist) >> 1)
 			}

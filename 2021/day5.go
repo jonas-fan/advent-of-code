@@ -57,7 +57,7 @@ func min(lhs int, rhs int) int {
 	return rhs
 }
 
-func solution(moves []*Move) int {
+func solution(moves []Move, aligned bool) int {
 	visited := make(map[string]int)
 
 	for _, move := range moves {
@@ -76,7 +76,7 @@ func solution(moves []*Move) int {
 			stepY = -1
 		}
 
-		if stepX != 0 && stepY != 0 {
+		if aligned && stepX != 0 && stepY != 0 {
 			continue
 		}
 
@@ -107,13 +107,13 @@ func solution(moves []*Move) int {
 }
 
 func main() {
-	moves := []*Move{}
+	moves := []Move{}
 
 	for input := range read(os.Stdin) {
 		points := strings.Split(input, " -> ")
 		from := strings.Split(points[0], ",")
 		to := strings.Split(points[1], ",")
-		move := &Move{
+		move := Move{
 			from: Point{x: str2int(from[0]), y: str2int(from[1])},
 			to:   Point{x: str2int(to[0]), y: str2int(to[1])},
 		}
@@ -121,5 +121,6 @@ func main() {
 		moves = append(moves, move)
 	}
 
-	fmt.Println(solution(moves))
+	fmt.Println(solution(moves, true))
+	fmt.Println(solution(moves, false))
 }

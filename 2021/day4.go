@@ -132,7 +132,7 @@ func str2int(strs []string) []int {
 	return out
 }
 
-func solution(boards []*Board, steps []int) int {
+func solution1(boards []*Board, steps []int) int {
 	for _, step := range steps {
 		for _, board := range boards {
 			if board.bingo(step) {
@@ -144,15 +144,44 @@ func solution(boards []*Board, steps []int) int {
 	return 0
 }
 
+func solution2(boards []*Board, steps []int) int {
+	won := make(map[int]bool, len(boards))
+
+	for _, step := range steps {
+		for i, board := range boards {
+			if won[i] {
+				continue
+			}
+
+			if board.bingo(step) {
+				won[i] = true
+
+				if len(won) == len(boards) {
+					return board.unmarked() * step
+				}
+			}
+		}
+	}
+
+	return 0
+}
+
 func main() {
 	steps := []int{}
 	table := [][]int{}
 	boards := []*Board{}
+	reader := read(os.Stdin)
 
-	for input := range read(os.Stdin) {
-		if len(steps) == 0 {
-			steps = str2int(strings.Split(input, ","))
-		} else if input != "" {
+	for input := range reader {
+		if input == "" {
+			break
+		}
+
+		steps = str2int(strings.Split(input, ","))
+	}
+
+	for input := range reader {
+		if input != "" {
 			table = append(table, str2int(strings.Fields(input)))
 		} else if len(table) > 0 {
 			boards = append(boards, FromTable(table))
@@ -160,5 +189,6 @@ func main() {
 		}
 	}
 
-	fmt.Println(solution(boards, steps))
+	fmt.Println(solution1(boards, steps))
+	fmt.Println(solution2(boards, steps))
 }

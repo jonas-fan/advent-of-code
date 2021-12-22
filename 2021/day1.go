@@ -25,7 +25,32 @@ func read(reader io.Reader) <-chan string {
 	return out
 }
 
-func solution(nums []int) int {
+func str2int(str string) int {
+	val, _ := strconv.Atoi(str)
+
+	return val
+}
+
+func solution1(nums []int) int {
+	if len(nums) < 1 {
+		return 0
+	}
+
+	increased := 0
+	last := 0
+
+	for _, each := range nums {
+		if each > last {
+			increased++
+		}
+
+		last = each
+	}
+
+	return increased - 1
+}
+
+func solution2(nums []int) int {
 	if len(nums) < 3 {
 		return 0
 	}
@@ -52,14 +77,9 @@ func main() {
 	nums := make([]int, 0)
 
 	for input := range read(os.Stdin) {
-		num, err := strconv.Atoi(input)
-
-		if err != nil {
-			panic(err)
-		}
-
-		nums = append(nums, num)
+		nums = append(nums, str2int(input))
 	}
 
-	fmt.Println(solution(nums))
+	fmt.Println(solution1(nums))
+	fmt.Println(solution2(nums))
 }

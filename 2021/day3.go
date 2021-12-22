@@ -25,6 +25,38 @@ func read(reader io.Reader) <-chan string {
 	return out
 }
 
+func solution1(binaries [][]int) int {
+	if len(binaries) == 0 {
+		return 0
+	}
+
+	bits := make([]int, len(binaries[0]))
+
+	for _, each := range binaries {
+		for i, bit := range each {
+			bits[i] += bit
+		}
+	}
+
+	for i, each := range bits {
+		if each < (len(binaries) >> 1) {
+			bits[i] = 0
+		} else {
+			bits[i] = 1
+		}
+	}
+
+	gamma := 0
+	epsilon := 0
+
+	for _, each := range bits {
+		gamma = (gamma << 1) | each
+		epsilon = (epsilon << 1) | (1 - each)
+	}
+
+	return gamma * epsilon
+}
+
 func b2i(bits []int) int {
 	out := 0
 
@@ -75,7 +107,7 @@ func dfs(binaries [][]int, pos int, most bool) int {
 	return dfs(binaries, pos+1, most)
 }
 
-func solution(binaries [][]int) int {
+func solution2(binaries [][]int) int {
 	if len(binaries) == 0 {
 		return 0
 	}
@@ -96,5 +128,6 @@ func main() {
 		binaries = append(binaries, binary)
 	}
 
-	fmt.Println(solution(binaries))
+	fmt.Println(solution1(binaries))
+	fmt.Println(solution2(binaries))
 }

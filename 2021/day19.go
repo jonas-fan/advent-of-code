@@ -164,10 +164,6 @@ func overlapped(lhs []*Coordinate, rhs []*Coordinate) map[int]int {
 					}
 
 					if ldiff[lfrom][lto].Equal(rdiff[rfrom][rto]) {
-						// fmt.Printf("Same! %2d->%2d %22v, %2d->%2d %22v\n",
-						// lfrom, lto, ldiff[lfrom][lto],
-						// rfrom, rto, rdiff[rfrom][rto])
-
 						laps[lfrom] = rfrom
 						laps[lto] = rto
 					}
@@ -210,8 +206,6 @@ func solution(scanners [][]*Coordinate) (int, int) {
 
 				if laps != nil {
 					scanners[j] = rotated
-
-					// fmt.Println(scanners[j])
 
 					for l, r := range laps {
 						positions[j] = &Coordinate{

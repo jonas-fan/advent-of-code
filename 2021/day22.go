@@ -58,7 +58,6 @@ type Cube struct {
 	X  Range
 	Y  Range
 	Z  Range
-	J  bool
 }
 
 func overlapped(lhs *Cube, rhs *Cube) (bool, *Cube) {

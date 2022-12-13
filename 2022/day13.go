@@ -150,15 +150,15 @@ func sol1(lhs []string, rhs []string) int {
 }
 
 func sol2(lhs []string, rhs []string) int {
-	packets := [][]Packet{}
+	packets := []Packet{}
 
 	for _, each := range append(lhs, rhs...) {
-		packets = append(packets, []Packet{parse(each)})
+		packets = append(packets, parse(each))
 	}
 
-	extras := [][]Packet{
-		[]Packet{parse("[[2]]")},
-		[]Packet{parse("[[6]]")},
+	extras := []Packet{
+		parse("[[2]]"),
+		parse("[[6]]"),
 	}
 
 	for _, each := range extras {
@@ -166,14 +166,21 @@ func sol2(lhs []string, rhs []string) int {
 	}
 
 	sort.Slice(packets, func(i int, j int) bool {
-		return compare(packets[i], packets[j]) < 0
+		lval := []Packet{packets[i]}
+		rval := []Packet{packets[j]}
+
+		return compare(lval, rval) < 0
 	})
 
 	out := 1
 
 	for i, each := range packets {
+		lval := []Packet{each}
+
 		for _, extra := range extras {
-			if compare(each, extra) == 0 {
+			rval := []Packet{extra}
+
+			if compare(lval, rval) == 0 {
 				out *= i + 1
 				break
 			}

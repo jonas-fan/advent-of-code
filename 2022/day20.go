@@ -40,7 +40,7 @@ func sol(nums []int, mul int, rounds int) int {
 			step := node.val % (len(order) - 1)
 
 			if step < 0 {
-				step += +len(order) - 1
+				step += len(order) - 1
 			}
 
 			for ; step > 0; step-- {

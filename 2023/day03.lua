@@ -28,11 +28,8 @@ local function part1(lines)
 
     for row in pairs(symbols) do
         for col in pairs(symbols[row]) do
-            for i = -1, 1 do
-                for j = -1, 1 do
-                    local row = row + i
-                    local col = col + j
-
+            for row = row - 1, row + 1 do
+                for col = col - 1, col + 1 do
                     if nums[row] and nums[row][col] then
                         if not seen[nums[row][col]] then
                             seen[#seen + 1] = nums[row][col].value
@@ -76,11 +73,8 @@ local function part2(lines)
         for col in pairs(symbols[row]) do
             local seen = {}
 
-            for i = -1, 1 do
-                for j = -1, 1 do
-                    local row = row + i
-                    local col = col + j
-
+            for row = row - 1, row + 1 do
+                for col = col - 1, col + 1 do
                     if nums[row] and nums[row][col] then
                         if not seen[nums[row][col]] then
                             seen[#seen + 1] = nums[row][col].value

@@ -18,4 +18,25 @@ function strings.split(str, sep)
     return out
 end
 
+function strings.enum(str, pattern)
+    pattern = pattern or "."
+
+    local index = 0
+    local token
+
+    return function()
+        local from, to = string.find(str, pattern)
+
+        if from == nil then
+            return nil
+        end
+
+        token = string.sub(str, from, to)
+        str   = string.sub(str, to + 1)
+        index = index + to
+
+        return index - to + from, token
+    end
+end
+
 return strings

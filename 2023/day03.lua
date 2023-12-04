@@ -7,7 +7,7 @@ local function part1(lines)
     local symbols = {}
 
     for row, line in ipairs(lines) do
-        for col, token in strings.enum(line, "%d+") do
+        for col, token in strings.ifind(line, "%d+") do
             local num = {
                 value = tonumber(token),
             }
@@ -18,7 +18,7 @@ local function part1(lines)
             end
         end
 
-        for col, token in strings.enum(line, "[^.%d]") do
+        for col, token in strings.ifind(line, "[^.%d]") do
             symbols[row]      = symbols[row] or {}
             symbols[row][col] = token
         end
@@ -50,7 +50,7 @@ local function part2(lines)
     local symbols = {}
 
     for row, line in ipairs(lines) do
-        for col, token in strings.enum(line, "%d+") do
+        for col, token in strings.ifind(line, "%d+") do
             local num = {
                 value = tonumber(token),
             }
@@ -61,7 +61,7 @@ local function part2(lines)
             end
         end
 
-        for col, token in strings.enum(line, "[*]") do
+        for col, token in strings.ifind(line, "[*]") do
             symbols[row]      = symbols[row] or {}
             symbols[row][col] = token
         end

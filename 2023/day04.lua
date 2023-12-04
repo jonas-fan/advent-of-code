@@ -10,11 +10,11 @@ local function part1(lines)
         local wins            = {}
         local ours            = {}
 
-        for _, each in strings.enum(lhs, "%d+") do
+        for each in string.gmatch(lhs, "%d+") do
             wins[each] = true
         end
 
-        for _, each in strings.enum(rhs, "%d+") do
+        for each in string.gmatch(rhs, "%d+") do
             ours[each] = true
         end
 
@@ -46,11 +46,11 @@ local function part2(lines)
 
         round = tonumber(round)
 
-        for _, each in strings.enum(lhs, "%d+") do
+        for each in string.gmatch(lhs, "%d+") do
             wins[each] = true
         end
 
-        for _, each in strings.enum(rhs, "%d+") do
+        for each in string.gmatch(rhs, "%d+") do
             ours[each] = true
         end
 

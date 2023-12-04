@@ -18,24 +18,23 @@ function strings.split(str, sep)
     return out
 end
 
-function strings.enum(str, pattern)
-    pattern = pattern or "."
-
-    local index = 0
-    local token
+function strings.ifind(str, pattern)
+    local index = 1
 
     return function()
-        local from, to = string.find(str, pattern)
+        local out = { string.find(str, pattern, index) }
 
-        if from == nil then
+        if #out == 0 then
             return nil
         end
 
-        token = string.sub(str, from, to)
-        str   = string.sub(str, to + 1)
-        index = index + to
+        index = out[2] + 1
 
-        return index - to + from, token
+        if #out < 3 then
+            return out[1], string.sub(str, table.unpack(out))
+        end
+
+        return out[1], select(3, table.unpack(out))
     end
 end
 

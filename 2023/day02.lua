@@ -1,9 +1,8 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
-local strings  = require "easy.strings"
+local enum    = require "easy.enum"
+local strings = require "easy.strings"
 
 local function part1(lines)
-    local out = 0
+    local out = {}
 
     for _, line in ipairs(lines) do
         local id, rest = string.match(line, "^Game (%d+): (.*)$")
@@ -21,11 +20,11 @@ local function part1(lines)
         end
 
         if cube.red <= 12 and cube.green <= 13 and cube.blue <=14 then
-            out = out + id
+            out[#out + 1] = id
         end
     end
 
-    return out
+    return enum.sum(out)
 end
 
 local function part2(lines)
@@ -49,14 +48,10 @@ local function part2(lines)
         out[#out + 1] = cube.red * cube.green * cube.blue
     end
 
-    return seq.reduce(out, operator.add, 0)
+    return enum.sum(out)
 end
 
-local lines = {}
-
-for line in io.lines() do
-    lines[#lines + 1] = line
-end
+local lines = enum.slice(io.lines())
 
 print("Part1", part1(lines))
 print("Part2", part2(lines))

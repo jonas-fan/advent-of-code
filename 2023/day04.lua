@@ -1,6 +1,5 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
-local strings  = require "easy.strings"
+local enum    = require "easy.enum"
+local strings = require "easy.strings"
 
 local function part1(lines)
     local out = {}
@@ -33,7 +32,7 @@ local function part1(lines)
         out[#out + 1] = points
     end
 
-    return seq.reduce(out, operator.add, 0)
+    return enum.sum(out)
 end
 
 local function part2(lines)
@@ -70,14 +69,10 @@ local function part2(lines)
         end
     end
 
-    return seq.reduce(out, operator.add, 0)
+    return enum.sum(out)
 end
 
-local lines = {}
-
-for line in io.lines() do
-    lines[#lines + 1] = line
-end
+local lines = enum.slice(io.lines())
 
 print("Part1", part1(lines))
 print("Part2", part2(lines))

@@ -1,6 +1,5 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
-local strings  = require "easy.strings"
+local enum    = require "easy.enum"
+local strings = require "easy.strings"
 
 local function overlapped(x, y, w, z)
     if math.max(x, y) < math.min(w, z) then
@@ -54,14 +53,10 @@ local function part1(lines)
             seeds[i] = seed
         end
 
-        return dfs(table.move(maps, 2, #maps, 1, {}), seeds)
+        return dfs(enum.slice(maps, 2), seeds)
     end
 
-    local out = dfs(maps, seeds)
-
-    return seq.reduce(out, function(out, value)
-        return math.min(out, value)
-    end, out[1])
+    return enum.min(dfs(maps, seeds))
 end
 
 local function part2(lines)
@@ -103,7 +98,7 @@ local function part2(lines)
         while #seeds > 0 do
             local seed = seeds[1]
 
-            seeds = table.move(seeds, 2, #seeds, 1, {})
+            seeds = enum.slice(seeds, 2)
 
             for _, rule in ipairs(maps[1]) do
                 if overlapped(seed.min, seed.max, rule.min, rule.max) then
@@ -132,21 +127,17 @@ local function part2(lines)
             out[#out + 1] = seed
         end
 
-        return dfs(table.move(maps, 2, #maps, 1, {}), out)
+        return dfs(enum.slice(maps, 2), out)
     end
 
-    local out = dfs(maps, seeds)
+    local out = enum.min(dfs(maps, seeds), function(lhs, rhs)
+        return lhs.min < rhs.min and lhs or rhs
+    end)
 
-    return seq.reduce(out, function(out, value)
-        return math.min(out, value.min)
-    end, out[1].min)
+    return out.min
 end
 
-local lines = {}
-
-for line in io.lines() do
-    lines[#lines + 1] = line
-end
+local lines = enum.slice(io.lines())
 
 print("Part1", part1(lines))
 print("Part2", part2(lines))

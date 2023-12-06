@@ -1,6 +1,5 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
-local strings  = require "easy.strings"
+local enum    = require "easy.enum"
+local strings = require "easy.strings"
 
 local function part1(lines)
     local function dfs(str, out)
@@ -17,13 +16,13 @@ local function part1(lines)
         return dfs(string.sub(str, 2), out)
     end
 
-    local nums = seq.map(lines, function(line)
+    local nums = enum.map(lines, function(line)
         local digits = dfs(line, {})
 
-        return seq.first(digits) * 10 + seq.last(digits)
+        return enum.at(digits, 1) * 10 + enum.at(digits, -1)
     end)
 
-    return seq.reduce(nums, operator.add, 0)
+    return enum.sum(nums)
 end
 
 local function part2(lines)
@@ -60,20 +59,16 @@ local function part2(lines)
         return dfs(string.sub(str, 2), out)
     end
 
-    local nums = seq.map(lines, function(line)
+    local nums = enum.map(lines, function(line)
         local digits = dfs(line, {})
 
-        return seq.first(digits) * 10 + seq.last(digits)
+        return enum.at(digits, 1) * 10 + enum.at(digits, -1)
     end)
 
-    return seq.reduce(nums, operator.add, 0)
+    return enum.sum(nums)
 end
 
-local lines = {}
-
-for line in io.lines() do
-    lines[#lines + 1] = line
-end
+local lines = enum.slice(io.lines())
 
 print("Part1", part1(lines))
 print("Part2", part2(lines))

@@ -1,6 +1,5 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
-local strings  = require "easy.strings"
+local enum    = require "easy.enum"
+local strings = require "easy.strings"
 
 local function part1(lines)
     local nums    = {}
@@ -42,7 +41,7 @@ local function part1(lines)
         end
     end
 
-    return seq.reduce(seen, operator.add, 0)
+    return enum.sum(seen)
 end
 
 local function part2(lines)
@@ -67,7 +66,7 @@ local function part2(lines)
         end
     end
 
-    local out = 0
+    local out = {}
 
     for row in pairs(symbols) do
         for col in pairs(symbols[row]) do
@@ -86,19 +85,15 @@ local function part2(lines)
             end
 
             if #seen > 1 then
-                out = out + seq.reduce(seen, operator.mul, 1)
+                out[#out + 1] = enum.product(seen)
             end
         end
     end
 
-    return out
+    return enum.sum(out)
 end
 
-local lines = {}
-
-for line in io.lines() do
-    lines[#lines + 1] = line
-end
+local lines = enum.slice(io.lines())
 
 print("Part1", part1(lines))
 print("Part2", part2(lines))

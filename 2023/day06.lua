@@ -1,5 +1,4 @@
-local operator = require "easy.operator"
-local seq      = require "easy.seq"
+local enum = require "easy.enum"
 
 local races = {
     {},
@@ -40,7 +39,7 @@ local function sol(races)
         out[#out + 1] = last - first + 1
     end
 
-    return seq.reduce(out, operator.mul, 1)
+    return enum.product(out)
 end
 
 print("Part1", sol(races[1]))

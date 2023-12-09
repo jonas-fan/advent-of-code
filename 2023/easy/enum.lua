@@ -41,6 +41,16 @@ local function each(enumerable)
     end
 end
 
+function enum.all(enumerable, fn)
+    for value in each(enumerable) do
+        if not fn(value) then
+            return false
+        end
+    end
+
+    return true
+end
+
 function enum.at(enumerable, index)
     enumerable = toslice(enumerable)
 
